@@ -14,5 +14,6 @@ export const PokemonSearch = (props) => (
       placeholder="pokemon name ex. pikachu"
       search={props.search}
     />
-  </div>
+<input id="types" type="text" placeholder="pokemon type ex. ground"/>
+</div>
 );

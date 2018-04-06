@@ -9,11 +9,15 @@ class App extends Component {
       pending: false,
       appUsed: false,
       pokemonCards: [],
+      //filterationType:'',
     };
   }
 
+//takes name and searches through website below
   searchPokemonCardByName(name) {
-    const api = 'https://api.pokemontcg.io/v1/cards?page=1&pageSize=30&name=';
+    const api = 'https://api.pokemontcg.io/v1/cards?page=1&pageSize=30';
+    const apiWithName = api + '&name' + name;
+    const apiWithTypes = apiWithName + '&types=' + type;
 
     this.setState({
       pokemonCards: [],
@@ -21,9 +25,10 @@ class App extends Component {
       appUsed: true,
     });
 
-    fetch(api + name)
+    fetch(apiWithName + name)
     .then(response => response.json())
     .then(data => {
+      //console.log('boo') would be seen 2nd, fetch can only display once data comes back
         this.setState({
           pending: false,
           pokemonCards: data.cards
@@ -31,7 +36,19 @@ class App extends Component {
       }
     );
   }
+  $(document).ready(function(){
+    $("#types").on("keyup", function() {
+      var types = $(this).val().toLowerCase();
+      $("#types").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
 
+//console.log('yay') would be shown first, while waiting for data, skips and reads down until data is found
+
+// the 2 containers below search and list
+// takes a function and passes name through it
   render() {
     return (
       <div className="App">

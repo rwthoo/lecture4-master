@@ -3,5 +3,13 @@
 }
 
 .search-bar__input {
-  width: 50%;
+  width:50%;
+
+}
+
+#types{
+  width:52%;
+  height:25px;;
+  margin-right:120px;
+  margin-top:10px;
 }

@@ -10,6 +10,7 @@ export class SearchBar extends React.Component{
 
   render() {
     return (
+      //when we call sumbit, call submithandler
       <div>
         <form onSubmit={(e) => this.onSubmitHandler(e)}>
           <input
