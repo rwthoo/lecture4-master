@@ -9,15 +9,18 @@ class App extends Component {
       pending: false,
       appUsed: false,
       pokemonCards: [],
-      //filterationType:'',
+      pokemonType:[],
     };
   }
 
 //takes name and searches through website below
   searchPokemonCardByName(name) {
     const api = 'https://api.pokemontcg.io/v1/cards?page=1&pageSize=30';
-    const apiWithName = api + '&name' + name;
-    const apiWithTypes = apiWithName + '&types=' + type;
+    const pokemonTypes = this.state.pokemonTypes;
+
+    //do something to get Fire|water|wind
+    var pokemonTypesString = pokemonTypes.join('|');
+
 
     this.setState({
       pokemonCards: [],
@@ -25,7 +28,7 @@ class App extends Component {
       appUsed: true,
     });
 
-    fetch(apiWithName + name)
+    fetch(api + name + '&types=' + pokemonTypesString)
     .then(response => response.json())
     .then(data => {
       //console.log('boo') would be seen 2nd, fetch can only display once data comes back
@@ -47,13 +50,26 @@ class App extends Component {
 
 //console.log('yay') would be shown first, while waiting for data, skips and reads down until data is found
 
+//filters through current pokemon types with new checkbox options
+handlePokemonTypeChange(e){
+  const currentTypes =this.state.pokemonTypes;
+  if(e.target.checked){
+  const newTypes =currentTypes.concat(e.target.value);
+  this.setState({pokemonTypes: newTypes})
+}else {
+  const newTypes =c urrentTypes.filter(type => type!==e.target.value);
+  this.setState({pokemonTypes:newTypes};)
+}
+}
 // the 2 containers below search and list
 // takes a function and passes name through it
   render() {
     return (
       <div className="App">
         <div className="App__container">
-          <PokemonSearch search={(pokemonName) => this.searchPokemonCardByName(pokemonName)}/>
+          <PokemonSearch
+            onPokemonTypeChange={(e)=>this.handlePokemonTypeChange(e)}
+            search={(pokemonName) => this.searchPokemonCardByName(pokemonName)}/>
           <PokemonList
             appUsed={this.state.appUsed}
             pending={this.state.pending}

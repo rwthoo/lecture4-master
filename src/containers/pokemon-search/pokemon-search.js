@@ -2,6 +2,12 @@ import React from 'react';
 import { SearchBar } from '../../components';
 import './pokemon-search.css';
 
+const types =[
+  'Fire'
+  'Grass'
+  'Water'
+];
+
 export const PokemonSearch = (props) => (
   <div className="pokemon-search">
     <div
@@ -14,6 +20,15 @@ export const PokemonSearch = (props) => (
       placeholder="pokemon name ex. pikachu"
       search={props.search}
     />
-<input id="types" type="text" placeholder="pokemon type ex. ground"/>
+  <div>
+    {types.map(type =>(
+    <span>
+      <Checkbox onChange={props.onPokemonTypeChange}value={type}/> {type}
+    //<Checkbox value="Water"/> Water//
+  //<Checkbox value="Grass"/> Grass//
+</span>
+  ))}
+  </div>
+
 </div>
 );
